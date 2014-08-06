@@ -9,6 +9,10 @@
 Complex Complex::operator^(const Complex& power) const { // (power, not XOR)
 	return (logarithm() * power).exponential();
 }
+Complex Complex::operator^(double power) const { // (power, not XOR)
+	return Complex(pow(length(), power),
+					angle()*power, false);
+}
 
 //
 // Helper functions:
