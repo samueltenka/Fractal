@@ -1,5 +1,6 @@
 #include "GraphicsRGB.h"
 #include "GraphicsRGB.h"
+#include <math.h>
 
 
 //
@@ -71,10 +72,10 @@ RGB RGB::operator*(double scale) const {return (RGB(*this) *= scale);}
 RGB RGB::operator/(double scale) const {return (RGB(*this) /= scale);}
 
 //
-// Bound:
-void RGB::bound()
+// for IO:
+void RGB::bound_and_round()
 {
-	R = R < 0 ? 0 : R > 255 ? 255 : R;
-	G = G < 0 ? 0 : G > 255 ? 255 : G;
-	B = B < 0 ? 0 : B > 255 ? 255 : B;
+	R = floor(R < 0 ? 0 : R > 255 ? 255 : R);
+	G = floor(G < 0 ? 0 : G > 255 ? 255 : G);
+	B = floor(B < 0 ? 0 : B > 255 ? 255 : B);
 }
