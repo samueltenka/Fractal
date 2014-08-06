@@ -8,6 +8,22 @@ using namespace std;
 
 
 void main() {
+	// Test angle calculation:
+	Complex Z;
+
+	Z = Complex(1, 1);
+	Z.print();
+	cout << Z.angle() / 3.14159265358979 << endl; // should be +0.25
+	Z = Complex(-1, 1);
+	Z.print();
+	cout << Z.angle() / 3.14159265358979 << endl; // should be +0.75
+	Z = Complex(-1, -1);
+	Z.print();
+	cout << Z.angle() / 3.14159265358979 << endl; // should be -0.25
+	Z = Complex(1, -1);
+	Z.print();
+	cout << Z.angle() / 3.14159265358979 << endl; // should be -0.75
+
 	// Render a nice Mandelbrot bitmap:
 	Bitmap I(SIDE, SIDE);
 	for(int r = 0; r < SIDE; r++) {
