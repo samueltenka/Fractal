@@ -12,6 +12,9 @@ Complex Complex::operator^(const Complex& power) const { // (power, not XOR)
 
 //
 // Helper functions:
+double Complex::length() const { // will always >= 0.
+	return sqrt(real*real + imag*imag);
+}
 double Complex::angle() const { // trigonometry, with all this sign-checking, just to avoid dividing by 0 and stuff :'(
 	//           Im
 	//            | pi/2      
@@ -33,9 +36,6 @@ double Complex::angle() const { // trigonometry, with all this sign-checking, ju
 		if(real > 0)  return 0;
 		else          return PI; // -PI also works.
 	}
-}
-double Complex::length() const { // will always >= 0.
-	return sqrt(real*real + imag*imag);
 }
 
 // since exp(it) = unit of angle t:
