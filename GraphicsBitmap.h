@@ -31,6 +31,9 @@ public:
 	void paint_pixel(int r, int c, double value) {
 		bitmap[r][c] = RGB(value, value, value);
 	}
+	void paint_pixel(int r, int c, RGB color) {
+		bitmap[r][c] = color;
+	}
 
 	void copy_from(Bitmap &other);
 };
