@@ -3,7 +3,6 @@
 #include <math.h>
 using namespace std;
 
-
 //
 // File IO:
 inline int Bitmap::row_size()
@@ -139,13 +138,18 @@ void Bitmap::write_body(ofstream& myfile)
 	int rs = row_size();
 	char* row = new char[rs];
 		
+	RGB todo(0, 0, 0);
 	for(int r = 0; r < height; r++)
 	{
 		for(int c = 0; c < width; c++)
 		{
-			row[3*c+0] = static_cast<int>(bitmap[r][c].B);
-			row[3*c+1] = static_cast<int>(bitmap[r][c].G);
-			row[3*c+2] = static_cast<int>(bitmap[r][c].R);
+			RGB goal = bitmap[r][c] + todo;
+			RGB actual = goal; actual.bound_and_round();
+			todo += bitmap[r][c] - actual;
+
+			row[3*c+0] = static_cast<int>(actual.B);
+			row[3*c+1] = static_cast<int>(actual.G);
+			row[3*c+2] = static_cast<int>(actual.R);
 		}
 		for(int c3 = 3*width; c3 < rs; c3++)
 		{
