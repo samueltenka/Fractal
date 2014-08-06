@@ -1,9 +1,10 @@
 #include <math.h>
 #include <cstdio>
+#include "GraphicsRGB.h"
 
 
 class Complex {
-private:
+public:
 	double real, imag;
 public:
 	//
@@ -39,8 +40,23 @@ public:
 	Complex logarithm() const;				
 	Complex exponential() const;
 
-	// Printing:
+	// Display:
 	void print() {
 		printf("%f + %fi\n", real, imag);
+	}
+	RGB color() {
+		static const RGB offset = RGB(1, 1, 1)/3;
+		static const RGB one = RGB(0.0, +1.0, -1.0)/sqrt(2.0) / sqrt(6.0);
+		static const RGB two = RGB(1.0, -0.5, -0.5)/sqrt(1.5) / sqrt(6.0);
+	
+		double l = length();
+		if(!l) { // in case it's 0
+			return RGB(0, 0, 0);
+		}
+		else if(real*0 != 0 || imag*0 != 0) { // in case it's infinite or undefined
+			return RGB(1, 1, 1)*192;
+		}
+		double maxed_l = atan(l/4.0) * 255.9 / (3.14159265358979/2);
+		return (offset + one*(real/l) + two*(imag/l)) * maxed_l;
 	}
 };
