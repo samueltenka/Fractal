@@ -29,6 +29,6 @@ public:
 	RGB operator*(double scale) const;
 	RGB operator/(double scale) const;
 
-	void bound();
+	void bound_and_round();
 };
 #endif
