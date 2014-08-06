@@ -1,7 +1,7 @@
 #include "Complex.h"
 
 
-#define POWER 2
+#define POWER 2.075
 
 
 Complex mandelbrot(Complex z, Complex c) {
@@ -29,5 +29,5 @@ int color(int num_steps) {
 	if(num_steps >= 0) {
 		return num_steps > 255 ? 255 : num_steps;
 	}
-	return 0; // got -1, meaning never escaped. => black.
+	return 255; // got -1, meaning never escaped. => white.
 }
