@@ -1,10 +1,13 @@
 #include "Complex.h"
 
 
+#define POWER 2
+
+
 Complex mandelbrot(Complex z, Complex c) {
-	Complex y = z*z*z;
+	//Complex y = z*z*z;
 	//Complex x = y*y*y;
-	return y*y*z + c;
+	return (z^POWER) + c;
 }
 
 int escape_time(Complex c, Complex (*map)(Complex, Complex), Complex initial, double threshold, int max_steps) {
