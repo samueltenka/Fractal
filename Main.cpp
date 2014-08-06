@@ -4,38 +4,52 @@ using namespace std;
 #include "GraphicsBitmap.h"
 
 
-#define SIDE 512
-
+#define PIXEL_SIDE 1024
+#define CMPLX_SIDE 1.0
+struct coor {
+	int r, c;
+	bool is_in_bounds() {
+		return (0 <= r && r < PIXEL_SIDE) &&
+				(0 <= c && c < PIXEL_SIDE);
+	}
+};
+coor to_pixel(Complex Z) {
+	coor rtrn;
+	rtrn.r = static_cast<int>((Z.imag+CMPLX_SIDE/2) * (PIXEL_SIDE/CMPLX_SIDE));
+	rtrn.c = static_cast<int>((Z.real+CMPLX_SIDE/2) * (PIXEL_SIDE/CMPLX_SIDE));
+	return rtrn;
+}
+Complex to_cmplx(int r, int c) {
+	return Complex(c*(CMPLX_SIDE/PIXEL_SIDE) - CMPLX_SIDE/2,   // centered on origin
+					r*(CMPLX_SIDE/PIXEL_SIDE) - CMPLX_SIDE/2); //
+}
 
 void main() {
-	// Test angle calculation:
-	Complex Z;
+	//// Render a nice Mandelbrot bitmap:
+	//Bitmap I(PIXEL_SIDE, PIXEL_SIDE);
 
-	Z = Complex(1, 1);
-	Z.print();
-	cout << Z.angle() / 3.14159265358979 << endl; // should be +0.25
-	Z = Complex(-1, 1);
-	Z.print();
-	cout << Z.angle() / 3.14159265358979 << endl; // should be +0.75
-	Z = Complex(-1, -1);
-	Z.print();
-	cout << Z.angle() / 3.14159265358979 << endl; // should be -0.25
-	Z = Complex(1, -1);
-	Z.print();
-	cout << Z.angle() / 3.14159265358979 << endl; // should be -0.75
+	//Complex C(-0.74543, 0.11301);
+	//Complex Z(0, 0);
+	//for(int i = 0; i < 512*512*64; i++) {
+	//	Z = julia(Z, C);
+	//	coor rc = to_pixel(Z);
+	//	if(rc.is_in_bounds()) {
+	//		I.paint_pixel(rc.r, rc.c, 255);
+	//	}
+	//	if(i%(512*512)==0) cout << '.';
+	//}
+	//I.write_to("C:\\Users\\Sam\\Documents\\Visual Studio 2012\\Projects\\Fractal\\Fractal\\J.bmp");
 
-	// Render a nice Mandelbrot bitmap:
-	Bitmap I(SIDE, SIDE);
-	for(int r = 0; r < SIDE; r++) {
-		for(int c = 0; c < SIDE; c++) {
-			Complex C(	c*(4.0/SIDE) - 2.0, // for 4x4 square
-						r*(4.0/SIDE) - 2.0);// centered on origin
-			int e = escape_time(C, &mandelbrot);
-			I.paint_pixel(r, c, e);
+	Bitmap I(PIXEL_SIDE, PIXEL_SIDE);
+	for(int r = 0; r < PIXEL_SIDE; r++) {
+		for(int c = 0; c < PIXEL_SIDE; c++) {
+			Complex C = to_cmplx(r, c);
+			//int e = escape_time(C, &newton);
+			I.paint_pixel(r, c, ((C^(-1)).exponential()).color());
 		}
 		if(r % 16 == 0) cout << '.';
 	}
-	I.write_to("C:\\Users\\Sam\\Documents\\Visual Studio 2012\\Projects\\Fractal\\Fractal\\M.bmp");
+	I.write_to("C:\\Users\\Sam\\Documents\\Visual Studio 2012\\Projects\\Fractal\\Fractal\\JL.bmp");
 
 	// Pause before exiting:
 	cout << "tada!" << endl; char l; cin >> l;
