@@ -33,6 +33,7 @@ public:
 
 	// Exponentiation (by means of polar coordinates):
 	Complex operator^(const Complex& power) const;
+	Complex operator^(double power) const;
 	double length() const;
 	double angle() const;
 	Complex logarithm() const;				
