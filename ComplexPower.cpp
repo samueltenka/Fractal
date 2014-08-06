@@ -32,7 +32,7 @@ double Complex::angle() const { // trigonometry, with all this sign-checking, ju
 	//            |-pi/2      
 	if(imag != 0) {
 		if(real > 0)		return atan( imag/real);		// Q1, Q4.
-		else if(imag > 0)	return atan( real/imag) + PI/2;	// Q2
+		else if(imag > 0)	return atan(-real/imag) + PI/2;	// Q2
 									
 		else				return atan(-real/imag) - PI/2;	// Q3
 	}
