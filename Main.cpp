@@ -1,44 +1,24 @@
-#include "Complex.h"
-
-
-Complex mandelbrot(Complex z, Complex c) {
-	return z*z + c;
-}
-
-int escape_time(Complex c, Complex (*map)(Complex, Complex), Complex initial, double threshold, int max_steps) {
-	Complex z = initial;
-
-	for(int steps = 0; steps < max_steps; steps++) {
-		if(z.length() > threshold) {
-			return steps;
-		}
-		z = map(z, c);
-	}
-	return -1;
-}
-int escape_time(Complex c, Complex (*map)(Complex, Complex)) {
-	return escape_time(c, map, Complex(0, 0), 100.0, 256);
-}
-
-int color(int num_steps) {
-	if(num_steps >= 0) {
-		return num_steps > 255 ? 255 : num_steps;
-	}
-	return 0; // got -1, meaning never escaped. => black.
-}
-
+#include "Mandelbrot.h"
 #include <iostream>
 using namespace std;
+#include "GraphicsBitmap.h"
+
+
+#define SIDE 512
+
+
 void main() {
-	// Test Mandelbrot escape calculations:
-	for(int r = 0; r < 60; r++) {
-		for(int c = 0; c < 60; c++) {
-			Complex C(r/20.0 - 1.5, c/20.0 - 1.5);
+	// Render a nice Mandelbrot bitmap:
+	Bitmap I(SIDE, SIDE);
+	for(int r = 0; r < SIDE; r++) {
+		for(int c = 0; c < SIDE; c++) {
+			Complex C(	c*(4.0/SIDE) - 2.0, // for 4x4 square
+						r*(4.0/SIDE) - 2.0);// centered on origin
 			int e = escape_time(C, &mandelbrot);
-			cout << (e==-1? '#' : ' ');
+			I.paint_pixel(r, c, e);
 		}
-		cout << endl;
 	}
+	I.write_to("C:\\Users\\Sam\\Documents\\Visual Studio 2012\\Projects\\Fractal\\Fractal\\M.bmp");
 
 	// Pause before exiting:
 	cout << "tada!" << endl; char l; cin >> l;
