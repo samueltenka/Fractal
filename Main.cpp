@@ -3,33 +3,22 @@
 using namespace std;
 #include "GraphicsBitmap.h"
 
-/*
-#define PIXEL_SIDE_H (1920*5)
-#define PIXEL_SIDE_W (1080*5)
 
-const double LEFT = -2.7;
-const double RIGHT = 0.8;
-const double LOWER = -3.11111111111;
-const double UPPER = 3.11111111111;
+#define PIXEL_SIDE_H 900//256
+#define PIXEL_SIDE_W 1600//256
+#define RATIO ((1.0*PIXEL_SIDE_W)/PIXEL_SIDE_H)
 
-const double HEIGHT = (UPPER-LOWER);
-const double WIDTH = (RIGHT-LEFT);
-const double CENTER_R = (LOWER + HEIGHT/2);
-const double CENTER_I = (LEFT + WIDTH/2);
-*/
+#define SIDE 2.0
 
-#define PIXEL_SIDE_H 256
-#define PIXEL_SIDE_W 256
+#define LEFT (-SIDE * RATIO)
+#define RIGHT (+SIDE * RATIO)
+#define LOWER (-SIDE)
+#define UPPER (SIDE)
 
-const double LEFT = -2;
-const double RIGHT = +2;
-const double LOWER = -2;
-const double UPPER = 2;
-
-const double HEIGHT = (UPPER-LOWER);
-const double WIDTH = (RIGHT-LEFT);
-const double CENTER_R = (LOWER + HEIGHT/2);
-const double CENTER_I = (LEFT + WIDTH/2);
+#define HEIGHT (UPPER-LOWER)
+#define WIDTH (RIGHT-LEFT)
+#define CENTER_R (LOWER + HEIGHT/2)
+#define CENTER_I (LEFT + WIDTH/2)
 
 
 struct coor {
@@ -80,12 +69,13 @@ void main() {
 	for(int r = 0; r < PIXEL_SIDE_H; r++) {
 		for(int c = 0; c < PIXEL_SIDE_W; c++) {
 			Complex C = to_cmplx(r, c);
-			RGB X = limit_color(C, &mandelbrot);
+			RGB X = limit_color(C, &alech);
+			//RGB X = (C^2).color();
 			I.paint_pixel(r, c, X);
 		}
 		if(r % 16 == 0) cout << '.';
 	}
-	I.write_to("C:\\Users\\Sam\\Documents\\Visual Studio 2012\\Projects\\Fractal\\Fractal\\_out\\Mz_.bmp");
+	I.write_to("C:\\Users\\Sam\\Documents\\Visual Studio 2012\\Projects\\Fractal\\Fractal\\_out\\Color.bmp");
 
 	// Pause before exiting:
 	cout << "tada!" << endl; char l; cin >> l;
