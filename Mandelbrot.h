@@ -20,8 +20,11 @@ int color(int num_steps) {
 Complex mandelbrot(Complex z, Complex c) {
 	return (z^POWER) + c;
 }
+Complex brianp(Complex z, Complex c) {
+	return (z^POWER) + (c^z); // try POWER = 4.
+}
 Complex alech(Complex z, Complex c) {
-	return (z^POWER) + (c^z);
+	return ((z^2.5)+c)^(-1.0); // creates "stardb" desktop background
 }
 //Complex julia(Complex z, Complex c) {
 //	return (z^POWER) + z;
